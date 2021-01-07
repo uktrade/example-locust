@@ -1,4 +1,4 @@
-from locust import HttpLocust, TaskSet, task
+from locust import between, HttpUser, task, TaskSet
 
 
 class WebsiteTasks(TaskSet):
@@ -12,7 +12,6 @@ class WebsiteTasks(TaskSet):
         self.client.get("/invest")
 
 
-class WebsiteUser(HttpLocust):
-    task_set = WebsiteTasks
-    min_wait = 5000
-    max_wait = 15000
+class WebsiteUser(HttpUser):
+    tasks = [WebsiteTasks]
+    wait_time = between(0.5, 15)
